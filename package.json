@@ -1,6 +1,6 @@
 {
   "name": "mobx-keystone-persist",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Persist and hydrate mobx-keystone stores",
   "main": "dist/index.js",
   "module": "dist/mobx-keystone-persist.esm.js",
