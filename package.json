@@ -32,19 +32,18 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "test:pub": "npm run build && npm pack",
-    "pub": "npm run build && npm publish",
+    "test:pub": "yarn build && yarn pack",
+    "pub": "yarn build && yarn publish",
     "changelog": "changelog-maker"
   },
   "peerDependencies": {
-    "mobx": "^5.11.0",
     "mobx-keystone": "^0.44.0"
   },
   "dependencies": {},
   "devDependencies": {
     "@agilgur5/changelog-maker": "^3.0.0",
     "jest-without-globals": "^0.0.2",
-    "mobx": "^5.11.0",
+    "mobx": "^5.15.4",
     "mobx-keystone": "^0.44.0",
     "tsdx": "^0.13.2",
     "typescript": "^3.5.2"
