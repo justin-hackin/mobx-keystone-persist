@@ -38,8 +38,8 @@ export const persist: IArgs = (name, store, options = {}) => {
     );
   }
 
-  const whitelistDict = arrToDict(whitelist);
-  const blacklistDict = arrToDict(blacklist);
+  const whitelistSet = new Set(whitelist || []);
+  const blacklistSet = new Set(blacklist || []);
 
   reaction(
     () => getSnapshot(store) as StrToAnyMap,
@@ -50,10 +50,10 @@ export const persist: IArgs = (name, store, options = {}) => {
         if (key === modelTypeKey || key === modelIdKey) {
           return;
         }
-        if (whitelist && !whitelistDict[key]) {
+        if (whitelist && !whitelistSet.has(key)) {
           delete snapshot[key];
         }
-        if (blacklist && blacklistDict[key]) {
+        if (blacklist && blacklistSet.has(key)) {
           delete snapshot[key];
         }
       });
@@ -72,18 +72,6 @@ export const persist: IArgs = (name, store, options = {}) => {
     applySnapshot(store, snapshot);
   });
 };
-
-type StrToBoolMap = { [key: string]: boolean };
-
-function arrToDict(arr?: Array<string>): StrToBoolMap {
-  if (!arr) {
-    return {};
-  }
-  return arr.reduce((dict: StrToBoolMap, elem) => {
-    dict[elem] = true;
-    return dict;
-  }, {});
-}
 
 function isString(value: any): value is string {
   return typeof value === "string";
