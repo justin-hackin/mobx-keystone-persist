@@ -1,15 +1,15 @@
-import { reaction } from "mobx";
 import {
-  getSnapshot,
   applySnapshot,
   modelTypeKey,
   modelIdKey,
+  onSnapshot,
+  getSnapshot,
 } from "mobx-keystone";
 
 import AsyncLocalStorage from "./asyncLocalStorage";
 
 export interface IArgs {
-  (name: string, store: object, options?: IOptions): Promise<void>;
+  (name: string, store: any, options?: IOptions): Promise<void>;
 }
 export interface IOptions {
   storage?: any;
@@ -41,27 +41,24 @@ export const persist: IArgs = (name, store, options = {}) => {
   const whitelistSet = new Set(whitelist || []);
   const blacklistSet = new Set(blacklist || []);
 
-  reaction(
-    () => getSnapshot(store) as StrToAnyMap,
-    (_snapshot) => {
-      // need to shallow clone as otherwise properties are non-configurable (https://github.com/agilgur5/mst-persist/pull/21#discussion_r348105595)
-      const snapshot = { ..._snapshot };
-      Object.keys(snapshot).forEach((key) => {
-        if (key === modelTypeKey || key === modelIdKey) {
-          return;
-        }
-        if (whitelist && !whitelistSet.has(key)) {
-          delete snapshot[key];
-        }
-        if (blacklist && blacklistSet.has(key)) {
-          delete snapshot[key];
-        }
-      });
+  onSnapshot(store, (_snapshot: StrToAnyMap) => {
+    // need to shallow clone as otherwise properties are non-configurable (https://github.com/agilgur5/mst-persist/pull/21#discussion_r348105595)
+    const snapshot = { ..._snapshot };
+    Object.keys(snapshot).forEach((key) => {
+      if (key === modelTypeKey || key === modelIdKey) {
+        return;
+      }
+      if (whitelist && !whitelistSet.has(key)) {
+        delete snapshot[key];
+      }
+      if (blacklist && blacklistSet.has(key)) {
+        delete snapshot[key];
+      }
+    });
 
-      const data = !jsonify ? snapshot : JSON.stringify(snapshot);
-      storage.setItem(name, data);
-    }
-  );
+    const data = !jsonify ? snapshot : JSON.stringify(snapshot);
+    storage.setItem(name, data);
+  });
 
   return storage.getItem(name).then((data: object | string) => {
     const snapshot = !isString(data) ? data : JSON.parse(data);
@@ -69,7 +66,14 @@ export const persist: IArgs = (name, store, options = {}) => {
     if (!snapshot) {
       return;
     }
-    applySnapshot(store, snapshot);
+
+    const defaults = getSnapshot(store);
+
+    applySnapshot(store, {
+      ...defaults,
+      ...snapshot,
+      $modelId: store.$modelId,
+    });
   });
 };
 
