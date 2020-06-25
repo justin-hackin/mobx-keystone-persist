@@ -69,6 +69,13 @@ export const persist: IArgs = (name, store, options = {}) => {
 
     const defaults = getSnapshot(store);
 
+    for (const key in snapshot) {
+      if (!(key in defaults)) {
+        console.warn(`persisted store contained non-existent key: ${key}`);
+        delete snapshot[key];
+      }
+    }
+
     applySnapshot(store, {
       ...defaults,
       ...snapshot,
