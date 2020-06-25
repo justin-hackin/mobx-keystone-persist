@@ -1,40 +1,30 @@
-# mst-persist
+# mobx-keystone-persist
 
-<!-- releases / versioning -->
-[![package-json](https://img.shields.io/github/package-json/v/agilgur5/mst-persist.svg)](https://npmjs.org/package/mst-persist)
-[![releases](https://img.shields.io/github/tag-pre/agilgur5/mst-persist.svg)](https://github.com/agilgur5/mst-persist/releases)
-[![commits](https://img.shields.io/github/commits-since/agilgur5/mst-persist/v0.1.3.svg)](https://github.com/agilgur5/mst-persist/commits/master)
-<br><!-- downloads -->
-[![dt](https://img.shields.io/npm/dt/mst-persist.svg)](https://npmjs.org/package/mst-persist)
-[![dy](https://img.shields.io/npm/dy/mst-persist.svg)](https://npmjs.org/package/mst-persist)
-[![dm](https://img.shields.io/npm/dm/mst-persist.svg)](https://npmjs.org/package/mst-persist)
-[![dw](https://img.shields.io/npm/dw/mst-persist.svg)](https://npmjs.org/package/mst-persist)
-<br><!-- status / activity -->
-[![typings](https://img.shields.io/npm/types/mst-persist.svg)](https://github.com/agilgur5/mst-persist/blob/master/src/index.ts)
-[![build status](https://img.shields.io/travis/agilgur5/mst-persist/master.svg)](https://travis-ci.org/agilgur5/mst-persist)
-[![code coverage](https://img.shields.io/codecov/c/gh/agilgur5/mst-persist/master.svg)](https://codecov.io/gh/agilgur5/mst-persist)
-<br>
-[![NPM](https://nodei.co/npm/mst-persist.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.org/package/mst-persist)
+[![npm version](https://badge.fury.io/js/mobx-keystone-persist.svg)](https://badge.fury.io/js/mobx-keystone-persist)
+[![typings](https://img.shields.io/npm/types/mobx-keystone-persist.svg)](https://github.com/Phault/mobx-keystone-persist/blob/master/src/index.ts)
+[![build status](https://img.shields.io/travis/Phault/mobx-keystone-persist/master.svg)](https://travis-ci.org/Phault/mobx-keystone-persist)
+[![code coverage](https://img.shields.io/codecov/c/gh/Phault/mobx-keystone-persist/master.svg)](https://codecov.io/gh/Phault/mobx-keystone-persist)
 
-Persist and hydrate [MobX-state-tree](https://github.com/mobxjs/mobx-state-tree) stores.
+Persist and hydrate [mobx-keystone](https://github.com/xaviergonz/mobx-keystone) stores.
 
 ## Installation
 
-`npm i -S mst-persist`
+`npm i -S mobx-keystone-persist`
 
 ## Usage
 
 ```javascript
-import { types } from 'mobx-state-tree'
+import { model, Model } from 'mobx-keystone'
 import localForage from 'localForage'
-import { persist } from 'mst-persist'
+import { persist } from 'mobx-keystone-persist'
 
-const SomeStore = types.model('Store', {
-  name: 'John Doe',
-  age: 32
-})
+@model('myApp/SomeStore')
+class SomeStore extends Model({
+    name: 'John Doe',
+    age: 32
+}) { }
 
-const someStore = SomeStore.create()
+const someStore = new SomeStore({})
 
 persist('some', someStore, {
   storage: localForage,  // or AsyncStorage in react-native.
@@ -51,18 +41,19 @@ persist('some', someStore, {
 #### `persist(key, store, options)`
 
 - arguments
-  - **key** *string* The key of your storage engine that you want to persist to.
-  - **store** *[MST](https://github.com/mobxjs/mobx-state-tree) store* The store to be persisted.
-  - **options** *object* Additional configuration options.
-    - **storage** *[localForage](https://github.com/localForage/localForage) / [AsyncStorage](https://github.com/react-native-community/async-storage) / [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)*
+
+  - **key** _string_ The key of your storage engine that you want to persist to.
+  - **store** _[mobx-keystone](https://github.com/xaviergonz/mobx-keystone) store_ The store to be persisted.
+  - **options** _object_ Additional configuration options.
+    - **storage** _[localForage](https://github.com/localForage/localForage) / [AsyncStorage](https://github.com/react-native-community/async-storage) / [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)_
       Any Storage Engine that has a Promise-style API similar to [`localForage`](https://github.com/localForage/localForage).
       The default is [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), which has a built-in adaptor to make it support Promises.
       For React Native, one may configure [`AsyncStorage`](https://github.com/react-native-community/async-storage) instead.
       <br>
-      Any of [`redux-persist`'s Storage Engines](https://github.com/rt2zz/redux-persist#storage-engines) should also be compatible with `mst-persist`.
-    - **jsonify** *bool* Enables serialization as JSON (default: `true`).
-    - **whitelist** *Array\<string\>* Only these keys will be persisted (defaults to all keys).
-    - **blacklist** *Array\<string\>* These keys will not be persisted (defaults to all keys).
+      Any of [`redux-persist`'s Storage Engines](https://github.com/rt2zz/redux-persist#storage-engines) should also be compatible with `mobx-keystone-persist`.
+    - **jsonify** _bool_ Enables serialization as JSON (default: `true`).
+    - **whitelist** _Array\<string\>_ Only these keys will be persisted (defaults to all keys).
+    - **blacklist** _Array\<string\>_ These keys will not be persisted (defaults to all keys).
 
 - returns a void Promise
 
@@ -81,16 +72,13 @@ if (typeof window !== 'undefined') { // window is undefined in Node
 
 With this conditional check, your store will only be hydrated client-side.
 
-## Examples
-
-None yet, but can take a look at [agilgur5/react-native-manga-reader-app](https://github.com/agilgur5/react-native-manga-reader-app) which uses it in production.
-Can view the commit that implements it [here](https://github.com/agilgur5/react-native-manga-reader-app/pull/2/commits/286725f417d321f25d16ee3858b0e7e6b7886e77).
-
 ## How it works
 
-Basically just a small wrapper around MST's [`onSnapshot` and `applySnapshot`](https://github.com/mobxjs/mobx-state-tree#snapshots).
-The source code is currently shorter than this README, so [take a look under the hood](https://github.com/agilgur5/mst-persist/tree/master/src)! :)
+Basically just a small wrapper around mobx-keystone's [`getSnapshot` and `applySnapshot`](https://mobx-keystone.js.org/snapshots).
+The source code is currently shorter than this README, so [take a look under the hood](https://github.com/Phault/mobx-keystone-persist/tree/master/src)! :)
 
 ## Credits
 
-Inspiration for parts of the code and API came from [`redux-persist`](https://github.com/rt2zz/redux-persist), [`mobx-persist`](https://github.com/pinqy520/mobx-persist), and [this MST persist PoC gist](https://gist.github.com/benjick/c48dd2db575e79c7b0b1043de4556ebc)
+A fork of [mst-persist](https://github.com/agilgur5/mst-persist) modified to use mobx-keystone instead of mobx-state-tree. I've barely had to touch the code due to how similar the libraries are, so credits goes to the original author [Anton Gilgur](https://github.com/agilgur5).
+
+Inspiration for parts of the original code and API came from [`redux-persist`](https://github.com/rt2zz/redux-persist), [`mobx-persist`](https://github.com/pinqy520/mobx-persist), and [this MST persist PoC gist](https://gist.github.com/benjick/c48dd2db575e79c7b0b1043de4556ebc)

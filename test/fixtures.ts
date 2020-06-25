@@ -1,15 +1,22 @@
-import { types } from 'mobx-state-tree'
+import { Model, modelAction, SnapshotOutOf, model, tProp } from "mobx-keystone";
 
-export const UserStoreF = types.model('UserStore', {
-  name: 'John Doe',
-  age: 32
-}).actions((self) => ({
+@model("UserStoreF")
+class UserStoreF extends Model({
+  name: tProp("John Doe"),
+  age: tProp(32),
+}) {
+  @modelAction
   changeName(name: string) {
-    self.name = name
+    this.name = name;
   }
-}))
-
-export const persistedDataF = {
-  name: 'Persisted Name',
-  age: 35
 }
+
+export const createUserStore = () => new UserStoreF({ $modelId: "abc" });
+
+export const persistedDataF: SnapshotOutOf<UserStoreF> = {
+  name: "Persisted Name",
+  age: 35,
+
+  $modelType: "UserStoreF",
+  $modelId: "abc",
+};
