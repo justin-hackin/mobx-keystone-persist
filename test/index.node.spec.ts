@@ -5,7 +5,7 @@
 
 import { describe, it, expect } from "jest-without-globals";
 
-import { persist } from "../src/index";
+import { persist } from "../src";
 import { createUserStore } from "./fixtures";
 
 describe("node usage", () => {
