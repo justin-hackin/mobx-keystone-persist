@@ -3728,10 +3728,10 @@ jest-watcher@^24.3.0, jest-watcher@^24.9.0:
     jest-util "^24.9.0"
     string-length "^2.0.0"
 
-jest-without-globals@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/jest-without-globals/-/jest-without-globals-0.0.2.tgz#1638ce9051c9c3e12b5d28ed9cbb68c1fa93217c"
-  integrity sha512-bj0gn7yJVqz8C3bvZdW6anc6K7YE1kQgFs7YuwnA6e3g+VzQc3zErIc4W2Mrx/06h1wdgBSswidVThp09of2/w==
+jest-without-globals@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/jest-without-globals/-/jest-without-globals-0.0.3.tgz#e351429af1d179622eec11ab44d08a4e0a09a0a1"
+  integrity sha512-P89751Sx8Y97xkbwLv4rxoDcRclHEB4H42CzM7wD7VS5Md57JUtNVTi7XwqcwShyzYRBHv/ER2PxnknBNSnGIA==
 
 jest-worker@^24.6.0, jest-worker@^24.9.0:
   version "24.9.0"
@@ -4182,20 +4182,20 @@ mkdirp@0.x, mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-mobx-keystone@^0.44.0:
-  version "0.44.0"
-  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.44.0.tgz#537a3d4546bb85092c9d13556c20d01aac531420"
-  integrity sha512-3WICfAZkKL9L5LS95aJC0ig55R9KGS9nXcWwp2k5uA+F1jpUX3BG778TVQvn+zyu28fvV9fNKZ1MDHqBOCF3kw==
+mobx-keystone@^0.45.1:
+  version "0.45.1"
+  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.45.1.tgz#4c38b8e5e4a78a2c20261fe2229b7d5e9114a333"
+  integrity sha512-FOuXZjd0pcm1WQMidMFNGZKegvc5lBjqkLKDb6gcWtvyZRFVv0bf+TjeI3Bg4t+D6I+WaoW/FC07VOwV2sN55A==
   dependencies:
     fast-deep-equal "^3.1.1"
     ts-toolbelt "^6.1.4"
     tslib "^2.0.0"
     uuid "^8.1.0"
 
-mobx@^5.15.4:
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.4.tgz#9da1a84e97ba624622f4e55a0bf3300fb931c2ab"
-  integrity sha512-xRFJxSU2Im3nrGCdjSuOTFmxVDGeqOHL+TyADCGbT0k4HHqGmx5u2yaHNryvoORpI4DfbzjJ5jPmuv+d7sioFw==
+mobx@^5.15.5:
+  version "5.15.5"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.5.tgz#69715dc8662f64d153309bfe95169b8df4b4be4b"
+  integrity sha512-hzk17T+/IIYLPWClRcfoA6Q5aZhFpDCr1oh8RZzu+esWP77IX/lS0V/Ee1Np+aOPKFfbSInF0reHH0L/aFfSrw==
 
 mri@^1.1.0:
   version "1.1.5"
@@ -5962,10 +5962,15 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-typescript@^3.5.2, typescript@^3.7.3:
+typescript@^3.7.3:
   version "3.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+
+typescript@^3.9.7:
+  version "3.9.7"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

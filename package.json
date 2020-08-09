@@ -37,15 +37,15 @@
     "changelog": "changelog-maker"
   },
   "peerDependencies": {
-    "mobx-keystone": "^0.44.0"
+    "mobx-keystone": "^0.45.1"
   },
   "dependencies": {},
   "devDependencies": {
     "@agilgur5/changelog-maker": "^3.0.0",
-    "jest-without-globals": "^0.0.2",
-    "mobx": "^5.15.4",
-    "mobx-keystone": "^0.44.0",
+    "jest-without-globals": "^0.0.3",
+    "mobx": "^5.15.5",
+    "mobx-keystone": "^0.45.1",
     "tsdx": "^0.13.2",
-    "typescript": "^3.5.2"
+    "typescript": "^3.9.7"
   }
 }
