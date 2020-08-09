@@ -29,7 +29,7 @@ const someStore = new SomeStore({})
 persist('some', someStore, {
   storage: localForage,  // or AsyncStorage in react-native.
                          // default: localStorage
-  jsonify: false  // if you use AsyncStorage, this shoud be true
+  jsonify: false,  // if you use AsyncStorage, this shoud be true
                   // default: true
   whitelist: ['name']  // only these keys will be persisted
 }).then(() => console.log('someStore has been hydrated'))
@@ -45,6 +45,7 @@ persist('some', someStore, {
   - **key** _string_ The key of your storage engine that you want to persist to.
   - **store** _[mobx-keystone](https://github.com/xaviergonz/mobx-keystone) store_ The store to be persisted.
   - **options** _object_ Additional configuration options.
+    - **version** _number_ Version code for the state (default: `-1`).
     - **storage** _[localForage](https://github.com/localForage/localForage) / [AsyncStorage](https://github.com/react-native-community/async-storage) / [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)_
       Any Storage Engine that has a Promise-style API similar to [`localForage`](https://github.com/localForage/localForage).
       The default is [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), which has a built-in adaptor to make it support Promises.
@@ -54,8 +55,17 @@ persist('some', someStore, {
     - **jsonify** _bool_ Enables serialization as JSON (default: `true`).
     - **whitelist** _Array\<string\>_ Only these keys will be persisted (defaults to all keys).
     - **blacklist** _Array\<string\>_ These keys will not be persisted (defaults to all keys).
+    - **migrate** _function_ Migration handler for versioning (default: `undefined`).
 
 - returns a void Promise
+
+### Migrations
+
+Mobx-keystone-persist has migration support very similar to redux-persist v6's migrations. The migration process runs after getting stored state but before actually reconciling with the store. 
+
+The library ships with `createMigrate` which covers most use cases and is simple to use. If you need more control of how versioning is handled and migrations are applied, you can instead write your own migrator. It can be any function which takes state as an argument and returns a promise to return a new state object.
+
+[[Additional information]](./docs/migrations.md)
 
 ### Node and Server-Side Rendering (SSR) Usage
 
@@ -79,6 +89,6 @@ The source code is currently shorter than this README, so [take a look under the
 
 ## Credits
 
-A fork of [mst-persist](https://github.com/agilgur5/mst-persist) modified to use mobx-keystone instead of mobx-state-tree. I've barely had to touch the code due to how similar the libraries are, so credits goes to the original author [Anton Gilgur](https://github.com/agilgur5).
+A fork of [mst-persist](https://github.com/agilgur5/mst-persist) by [Anton Gilgur](https://github.com/agilgur5). modified to use mobx-keystone instead of mobx-state-tree.
 
 Inspiration for parts of the original code and API came from [`redux-persist`](https://github.com/rt2zz/redux-persist), [`mobx-persist`](https://github.com/pinqy520/mobx-persist), and [this MST persist PoC gist](https://gist.github.com/benjick/c48dd2db575e79c7b0b1043de4556ebc)
