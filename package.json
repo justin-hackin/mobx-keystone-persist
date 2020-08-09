@@ -33,15 +33,13 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "test:pub": "yarn build && yarn pack",
-    "pub": "yarn build && yarn publish",
-    "changelog": "changelog-maker"
+    "pub": "yarn build && yarn publish"
   },
   "peerDependencies": {
     "mobx-keystone": "^0.45.1"
   },
   "dependencies": {},
   "devDependencies": {
-    "@agilgur5/changelog-maker": "^3.0.0",
     "jest-without-globals": "^0.0.3",
     "mobx": "^5.15.5",
     "mobx-keystone": "^0.45.1",
