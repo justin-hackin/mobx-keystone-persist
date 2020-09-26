@@ -10,6 +10,7 @@ import AsyncLocalStorage from "./asyncLocalStorage";
 import { AnySnapshot, Migrator, PersistedState, VersionCode } from "./types";
 import { DEFAULT_VERSION } from "./constants";
 import { isSnapshot, isString } from "./utils";
+import debounce from "lodash.debounce";
 
 export interface IArgs {
   (name: string, store: any, options?: IOptions): Promise<void>;
@@ -22,6 +23,7 @@ export interface IOptions {
   readonly whitelist?: Array<string>;
   readonly blacklist?: Array<string>;
   migrate?: Migrator;
+  throttle?: number;
 }
 
 export const persist: IArgs = async (name, store, options = {}) => {
@@ -32,6 +34,7 @@ export const persist: IArgs = async (name, store, options = {}) => {
     blacklist,
     version = DEFAULT_VERSION,
     migrate,
+    throttle,
   } = options;
 
   // use AsyncLocalStorage by default (or if localStorage was passed in)
@@ -53,7 +56,7 @@ export const persist: IArgs = async (name, store, options = {}) => {
   const whitelistSet = new Set(whitelist || []);
   const blacklistSet = new Set(blacklist || []);
 
-  onSnapshot(store, (_snapshot: AnySnapshot) => {
+  const persistSnapshot = (_snapshot: AnySnapshot) => {
     // need to shallow clone as otherwise properties are non-configurable (https://github.com/agilgur5/mst-persist/pull/21#discussion_r348105595)
     const snapshot = { ..._snapshot };
     Object.keys(snapshot).forEach((key) => {
@@ -75,7 +78,14 @@ export const persist: IArgs = async (name, store, options = {}) => {
 
     const data = !jsonify ? state : JSON.stringify(state);
     storage.setItem(name, data);
-  });
+  };
+
+  onSnapshot(
+    store,
+    typeof throttle === "number"
+      ? debounce(persistSnapshot, throttle)
+      : persistSnapshot
+  );
 
   const data: object | string = await storage.getItem(name);
   const stateOrSnapshot = !isString(data) ? data : JSON.parse(data);

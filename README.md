@@ -14,26 +14,25 @@ Persist and hydrate [mobx-keystone](https://github.com/xaviergonz/mobx-keystone)
 ## Usage
 
 ```javascript
-import { model, Model } from 'mobx-keystone'
-import localForage from 'localForage'
-import { persist } from 'mobx-keystone-persist'
+import { model, Model } from "mobx-keystone";
+import localForage from "localForage";
+import { persist } from "mobx-keystone-persist";
 
-@model('myApp/SomeStore')
+@model("myApp/SomeStore")
 class SomeStore extends Model({
-    name: 'John Doe',
-    age: 32
-}) { }
+  name: "John Doe",
+  age: 32,
+}) {}
 
-const someStore = new SomeStore({})
+const someStore = new SomeStore({});
 
-persist('some', someStore, {
-  storage: localForage,  // or AsyncStorage in react-native.
-                         // default: localStorage
-  jsonify: false,  // if you use AsyncStorage, this shoud be true
-                  // default: true
-  whitelist: ['name']  // only these keys will be persisted
-}).then(() => console.log('someStore has been hydrated'))
-
+persist("some", someStore, {
+  storage: localForage, // or AsyncStorage in react-native.
+  // default: localStorage
+  jsonify: false, // if you use AsyncStorage, this shoud be true
+  // default: true
+  whitelist: ["name"], // only these keys will be persisted
+}).then(() => console.log("someStore has been hydrated"));
 ```
 
 ### API
@@ -56,12 +55,13 @@ persist('some', someStore, {
     - **whitelist** _Array\<string\>_ Only these keys will be persisted (defaults to all keys).
     - **blacklist** _Array\<string\>_ These keys will not be persisted (defaults to all keys).
     - **migrate** _function_ Migration handler for versioning (default: `undefined`).
+    - **throttle** _number_ Throttle and delay persisting so it can't happen more than once every Nth ms (default: undefined).
 
 - returns a void Promise
 
 ### Migrations
 
-Mobx-keystone-persist has migration support very similar to redux-persist v6's migrations. The migration process runs after getting stored state but before actually reconciling with the store. 
+Mobx-keystone-persist has migration support very similar to redux-persist v6's migrations. The migration process runs after getting stored state but before actually reconciling with the store.
 
 The library ships with `createMigrate` which covers most use cases and is simple to use. If you need more control of how versioning is handled and migrations are applied, you can instead write your own migrator. It can be any function which takes state as an argument and returns a promise to return a new state object.
 

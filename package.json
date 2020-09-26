@@ -38,8 +38,11 @@
   "peerDependencies": {
     "mobx-keystone": "^0.45.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
     "jest-without-globals": "^0.0.3",
     "mobx": "^5.15.5",
     "mobx-keystone": "^0.45.1",
