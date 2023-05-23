@@ -36,7 +36,7 @@
     "pub": "yarn build && yarn publish"
   },
   "peerDependencies": {
-    "mobx-keystone": "^0.45.1"
+    "mobx-keystone": "^0.45.1 || ^1.0.0"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8"
